@@ -10,7 +10,7 @@ def main():
         if num < 1 or num > 365:
             raise ValueError("The number of people is not valid")
     except ValueError:
-        sys.exit("Invalid number! try typing a number > 0")
+        sys.exit("Invalid number! try typing a number between 1 and 365")
 
     print("Here's how our room looks like:")
     # Print the birthdays of each person
