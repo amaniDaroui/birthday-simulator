@@ -23,19 +23,13 @@ The program generates random birthdays while considering the variations in the n
 
 ## Example Output
 
-How many people? 23
-Here's how our room looks like:
-Person 1's birthday: January 15
-Person 2's birthday: March 2
-...
-The probability that at least two people have the same birthday is nearly 50.73%
-In our simulation, no two people have the same birthday.
+![image](https://github.com/user-attachments/assets/7b77294e-7848-44c8-9dbf-82a5f0ce500e)
 
 ## Requirements
 Python 3.x
 No external libraries are required.
 ## Author
 Amani Daroui
-
+October 22, 2024
 ## License
 This project is licensed under the MIT License.
