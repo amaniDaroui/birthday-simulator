@@ -1,0 +1,79 @@
+import sys
+import random
+from math import factorial
+from collections import Counter
+
+
+def main():
+    try:
+        num = int(input("how many people? "))
+        if num < 1 or num > 365:
+            raise ValueError("The number of people is not valid")
+    except ValueError:
+        sys.exit("Invalid number! try typing a number > 0")
+
+    print("Here's how our room looks like:")
+    # Print the birthdays of each person
+    date = generate_birthday(num)
+    for person in date:
+        print(f"{person}'s birthdays: {date[person]}")
+
+    # Print probability
+    p = calculate(num)
+    print(f"The probability that at least two people have the same birthday is nearly {p}%")
+
+    # Check if there's at least two birthday matches
+    matching_people = check_duplicates(date)
+    if matching_people:
+        print(matching_people)
+    else:
+        print("In our simulation, no two people have the same birthday")
+
+
+def generate_birthday(n):
+    """Generate n random birthdays to n people"""
+    months = ["January", "February", "March", "April", "May", "June",
+               "July", "August", "September", "October", "November", "December"]
+    people = {}
+
+    for i in range(n):
+        month = random.choice(months)
+        if month in ["September", "April", "June", "November"]:
+            day = random.randint(1, 30)
+        elif month == "February":
+            day = random.choices([28, 29], weights=[3, 1], k=1)[0]  # 3:1 ratio for 28 vs 29 days
+        else:
+            day = random.randint(1, 31)
+
+        # Assign each person a birthday
+        person = f"Person {i + 1}"
+        date = f"{month} {day}"
+        people[person] = date
+
+    return people
+
+
+def calculate(x):
+    """Calculate the Probability that at least two people share the same birthday"""
+    prob_different = factorial(365)/factorial(365-x)/pow(365,x)  # Calulates the probability that no one shares the same birthday
+
+    prob_same = (1 - prob_different) * 100
+    return f"{prob_same: .2f}"
+
+
+def check_duplicates(date):
+    """Checks if at least two people share the same birthday"""
+    # Count the occurences of each birthday
+    birthday_counter = Counter(date.values())
+    # Check for birthdays that are shared
+    duplicates = {birthday: count for birthday, count in birthday_counter.items() if count > 1 }
+    if duplicates:
+        for birthday, count in duplicates.items():
+                         # Stores in the list matching_people the name of those who share the same birthday
+            matching_people = [person for person, bd in date.items() if bd == birthday ]
+            return f"The following people share the birthday {birthday}: {', '.join(matching_people)}"
+    else:
+        return None
+
+
+main()
